@@ -11,7 +11,7 @@ public class HttpClientConnectHandler extends EndyHttpAsyncEvent<Socket> {
     }
     
     public void handle(Socket client) {
-        BufferedReader reader = new BufferedReader(new InputStream(client.getInputStream()));
+        BufferedReader reader = new BufferedReader(new InputStream(client.getInputStreamReader());
         System.out.println(reader.readLine());
     }
     

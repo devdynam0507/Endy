@@ -1,4 +1,7 @@
 package server.handler;
 
-public interface IEndyHttpEvent {
+public interface IEndyHttpEvent<T> {
+    
+    void handle(T object);
+    
 }
