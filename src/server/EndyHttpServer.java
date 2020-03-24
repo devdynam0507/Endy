@@ -36,7 +36,7 @@ public class EndyHttpServer extends Thread {
                     EndyHttpAsyncEvent<Socket> asyncEvent = HttpClientConnectHandler.instance(client);
                     asyncEvent.start();
                     
-                    
+                    //TODO http pack out
                 }
             } catch(IOException e) {
                 e.printStackTrace();
