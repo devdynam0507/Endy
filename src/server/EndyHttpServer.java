@@ -20,13 +20,13 @@ public class EndyHttpServer extends Thread {
     
     @Override
     public void run() {
-        if(socket != null) {
+        if(socket == null) {
             try {
                 socket = new ServerSocket(port);
                 isAlive = true;
                 
                 System.out.println("Endy framework to be started!");
-                System.out.println("Listening client...")
+                System.out.println("Listening client...");
                 System.out.println("IP: " + socket.getInetAddress().getHostName() + ":" + port);
                 
                 while(isAlive) {

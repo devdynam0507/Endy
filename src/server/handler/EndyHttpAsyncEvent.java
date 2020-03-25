@@ -10,7 +10,11 @@ public abstract class EndyHttpAsyncEvent<T> extends Thread implements IEndyHttpE
     
     @Override
     public void run() {
-        handle(object);
+        try {
+            handle(object);            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

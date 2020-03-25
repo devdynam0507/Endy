@@ -2,6 +2,9 @@ package server.handler;
 
 import java.net.Socket;
 
+import server.response.HttpResponse;
+import server.response.IHttpResponse;
+
 public class HttpClientConnectHandler extends EndyHttpAsyncEvent<Socket> {
     
     public static HttpClientConnectHandler instance(Socket client) { return new HttpClientConnectHandler(client); }
@@ -10,9 +13,9 @@ public class HttpClientConnectHandler extends EndyHttpAsyncEvent<Socket> {
         super(client);
     }
     
-    public void handle(Socket client) {
-        BufferedReader reader = new BufferedReader(new InputStream(client.getInputStreamReader());
-        System.out.println(reader.readLine());
+    public void handle(Socket client) throws Exception {
+        IHttpResponse res = new HttpResponse();
+        res.response("index.html", client);
     }
     
 }

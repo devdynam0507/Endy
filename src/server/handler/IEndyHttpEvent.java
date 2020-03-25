@@ -2,6 +2,6 @@ package server.handler;
 
 public interface IEndyHttpEvent<T> {
     
-    void handle(T object);
+    void handle(T object) throws Exception;
     
 }
