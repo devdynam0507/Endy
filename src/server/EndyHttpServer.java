@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import server.handler.EndyHttpAsyncEvent;
 import server.handler.HttpClientConnectHandler;
+import server.http.HttpParser;
 
 public class EndyHttpServer extends Thread {
     
@@ -33,10 +34,10 @@ public class EndyHttpServer extends Thread {
                     Socket client = socket.accept();
                     System.out.println(client.getInetAddress().getHostAddress() + "/HTTP");
                     
+                    HttpParser.parse(client);
+                    
                     EndyHttpAsyncEvent<Socket> asyncEvent = HttpClientConnectHandler.instance(client);
                     asyncEvent.start();
-                    
-                    //TODO http pack out
                 }
             } catch(IOException e) {
                 e.printStackTrace();
