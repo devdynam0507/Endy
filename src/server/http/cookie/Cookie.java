@@ -15,4 +15,17 @@ public class Cookie {
         cookies.put(cookieId, cookieContent);
     }
     
+    public String getCookie(String cookieId) {
+        String cookie = cookies.get(cookieId);
+        
+        if(cookie == null) {
+            //TODO throws cookie not found exception
+        }
+        
+        return cookie;
+    }
+    
+    @Override
+    public String toString() { return cookies.toString(); }
+    
 }

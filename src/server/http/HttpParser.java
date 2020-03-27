@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import server.http.cookie.Cookie;
 import server.request.HttpRequestPacket;
-import server.request.HttpRequestPacket.HttpRequestBuilder;
 
 public class HttpParser {
     
@@ -20,7 +20,7 @@ public class HttpParser {
             parse(builder, packet);
         }
         
-        return null;
+        return builder.build();
     }
     
     private static void parse(HttpRequestPacket.HttpRequestBuilder builder, String[] packet) {
@@ -36,17 +36,51 @@ public class HttpParser {
                 builder.setHost(packetContent);
                 break;
             case "Referer":
-                //TODO need fix
+                parseParam(packetContent, builder);                
                 builder.setReferrer(parseReferrer(packetContent));
-                System.out.println("ref: " + parseReferrer(packetContent));
+                break;
+            case "Cookie":
+                builder.setCookie(parseCookie(packetContent));
+                break;
         }
     }
     
-    private static String parseReferrer(String ref) {
-        System.out.println(ref);
-        String split = ref.split("://")[1];
+    private static Cookie parseCookie(String packetContent) {
+        String[] split = packetContent.split(";");
+        Cookie cookie = new Cookie();
         
-        return split.substring(split.indexOf('/'), split.length());
+        for(String cookieContent : split) {
+            String[] cookieSplit = cookieContent.split("=");
+            
+            cookie.setCookie(cookieSplit[0].trim(), cookieSplit[1]); //cookieId, cookieContent
+        }
+        
+        return cookie;
+    }
+    
+    private static String parseReferrer(String ref) {
+        int last = ref.indexOf("?");
+        
+        if(last > -1) {
+            last = ref.length();
+        }
+        
+        return ref.substring(ref.indexOf('/'), last-1);
+    }
+    
+    private static void parseParam(String ref, HttpRequestPacket.HttpRequestBuilder builder) {
+        int paramStart = ref.indexOf('?');
+        System.out.println(paramStart + ":" + ref);
+        
+        if(paramStart != -1) {
+            String[] parseParam = ref.split("\\?")[1].split("&");
+            
+            for(String param : parseParam) {
+                String[] paramSplit = param.split("=");
+                
+                builder.setParameter(paramSplit[0], paramSplit[1]);
+            }
+        }
     }
     
     private static String[] parse(String line) {
@@ -56,7 +90,9 @@ public class HttpParser {
             String packetId = null;
             
             packetId = line.split("/")[0];
-            split = new String[] { "method", packetId };
+            split = new String[] { "Method", packetId };
+        } else if(line.contains("Referer")) {
+            split = new String[] { "Referer", line.substring(17, line.length())};
         }
         
         return split;

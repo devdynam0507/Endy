@@ -11,8 +11,23 @@ public class HttpRequestPacket {
     private String method;
     private String referrer;
     private Cookie cookie;
+    private Map<String, String> parameter;
     
-    private HttpRequestPacket() {}
+    private HttpRequestPacket() {
+        parameter = new HashMap<>();
+    }
+    
+    public String getHost() { return host; }
+    public String getMethod() { return method; }
+    public String getReferrer() { return referrer; }
+    public Cookie getCookie() { return cookie; }
+    
+    public String getParameter(String paramName) { return parameter.get(paramName); }
+    
+    @Override
+    public String toString() {
+        return parameter.toString();
+    }
     
     public static class HttpRequestBuilder {
     
@@ -49,6 +64,14 @@ public class HttpRequestPacket {
             
             return this;
         }
+        
+        public HttpRequestBuilder setParameter(String paramName, String param) {
+            request.parameter.put(paramName, param);
+            
+            return this;
+        }
+        
+        public HttpRequestPacket build() { return request; }
         
     }
     
