@@ -28,9 +28,8 @@ public class HttpParser {
         String packetContent = packet[1];
         
         switch(packetId) {
-            case "GET":
-            case "POST":
-                builder.setMethod(packetContent);
+            case "Method":
+                builder.setMethod(packetContent.trim());
                 break;
             case "Host":
                 builder.setHost(packetContent);
@@ -61,16 +60,15 @@ public class HttpParser {
     private static String parseReferrer(String ref) {
         int last = ref.indexOf("?");
         
-        if(last > -1) {
+        if(last == -1) {
             last = ref.length();
         }
         
-        return ref.substring(ref.indexOf('/'), last-1);
+        return ref.substring(ref.indexOf('/'), last);
     }
     
     private static void parseParam(String ref, HttpRequestPacket.HttpRequestBuilder builder) {
         int paramStart = ref.indexOf('?');
-        System.out.println(paramStart + ":" + ref);
         
         if(paramStart != -1) {
             String[] parseParam = ref.split("\\?")[1].split("&");

@@ -8,6 +8,7 @@ import server.handler.EndyHttpAsyncEvent;
 import server.handler.HttpClientConnectHandler;
 import server.http.HttpParser;
 import server.request.HttpRequestPacket;
+import server.page.annotation.handler.ServerAnnotationHandler;
 
 public class EndyHttpServer extends Thread {
     
@@ -36,10 +37,8 @@ public class EndyHttpServer extends Thread {
                     System.out.println(client.getInetAddress().getHostAddress() + "/HTTP");
                     
                     HttpRequestPacket request = HttpParser.parse(client);
-                    //TODO Served page
                     
-                    EndyHttpAsyncEvent<Socket> asyncEvent = HttpClientConnectHandler.instance(client);
-                    asyncEvent.start();
+                    ServerAnnotationHandler.handleTest(request, client);
                 }
             } catch(IOException e) {
                 e.printStackTrace();

@@ -1,17 +1,17 @@
 package server.response;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 import server.response.IHttpResponse;
 
 public class HttpResponse implements IHttpResponse {
     
     @Override
-    public void response(String pageName, Socket client) {
+    public void response(Socket client) {
         try {
             PrintWriter out = new PrintWriter(client.getOutputStream());
             String[] html = new String[] { "<H1> Endy <H1> <hr> So.. simple framework!" };
@@ -31,6 +31,26 @@ public class HttpResponse implements IHttpResponse {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static class ResponseContext {
+        
+        private Map<String, String> context;
+        
+        public ResponseContext() {
+            context = new HashMap<>();
+        }
+        
+        public ResponseContext setContext(String contextName, String contextObject) {
+            context.put(contextName, contextObject);
+            
+            return this;
+        }
+        
+        public String getContext(String contextName) {
+            return context.get(contextName);
+        }
+        
     }
     
 }

@@ -15,7 +15,7 @@ public class HttpClientConnectHandler extends EndyHttpAsyncEvent<Socket> {
     
     public void handle(Socket client) throws Exception {
         IHttpResponse res = new HttpResponse();
-        res.response("index.html", client);
+        res.response(client);
     }
     
 }

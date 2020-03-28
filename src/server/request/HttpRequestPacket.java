@@ -25,9 +25,7 @@ public class HttpRequestPacket {
     public String getParameter(String paramName) { return parameter.get(paramName); }
     
     @Override
-    public String toString() {
-        return parameter.toString();
-    }
+    public String toString() { return method; }
     
     public static class HttpRequestBuilder {
     

@@ -4,6 +4,6 @@ import java.net.Socket;
 
 public interface IHttpResponse {
     
-    public void response(String pageName, Socket client); // server response method
+    public void response(Socket client); // server response method
     
 }

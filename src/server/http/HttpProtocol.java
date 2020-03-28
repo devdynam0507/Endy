@@ -1,5 +1,5 @@
 package server.http;
 
 public enum HttpProtocol {
-    GET, POST;
+    GET, POST, NORMAL;
 }

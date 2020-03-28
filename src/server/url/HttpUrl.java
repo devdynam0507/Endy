@@ -7,13 +7,13 @@ import server.page.AbstractPage;
 
 public class HttpUrl {
     
-    private static Map<String, Class<? super AbstractPage>> urls = new HashMap<>();
+    private static Map<String, Class<AbstractPage>> urls = new HashMap<>();
     
     /**
-        Url 등록
+        Url register
     */
-    public static void register(String referrer, Class<? super AbstractPage> page) {
-        
+    public static void register(String referrer, Class<AbstractPage> page) {
+        urls.put(referrer, page);
     }
     
 }
