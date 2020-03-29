@@ -6,23 +6,16 @@ import java.net.Socket;
 
 import server.response.IHttpResponse;
 import server.response.HttpResponse.ResponseContext;
+import server.html.Html;
 
 public abstract class AbstractPage implements IHttpResponse {
     
-    private String html =  "<H1> Endy <H1> <hr> So.. simple framework!";
-    protected ResponseContext context;
-    
-    public AbstractPage(String html) {
-        this.html = html;
-        this.context = new ResponseContext();
-        //TODO html parse
-    }
+    protected ResponseContext context = new ResponseContext();
     
     @Override
-    public void response(Socket client) {
+    public void response(Socket client, Html html) {
         try {
             ResponseContext context = response();
-        
             PrintWriter out = new PrintWriter(client.getOutputStream());
 
             /* Headers */
@@ -30,7 +23,7 @@ public abstract class AbstractPage implements IHttpResponse {
             out.println("Content-Type: text/html; charset=utf-8");
             out.println("Server: Endy");
             out.println("");
-            out.println(html);
+            out.println(html.toHtml());
             
             out.close();            
         } catch(IOException e) {

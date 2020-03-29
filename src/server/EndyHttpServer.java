@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import server.handler.EndyHttpAsyncEvent;
-import server.handler.HttpClientConnectHandler;
 import server.http.HttpParser;
 import server.request.HttpRequestPacket;
 import server.page.annotation.handler.ServerAnnotationHandler;
@@ -33,12 +31,11 @@ public class EndyHttpServer extends Thread {
                 System.out.println("IP: " + socket.getInetAddress().getHostName() + ":" + port);
                 
                 while(isAlive) {
-                    Socket client = socket.accept();
-                    System.out.println(client.getInetAddress().getHostAddress() + "/HTTP");
-                    
+                    Socket client = socket.accept();            
                     HttpRequestPacket request = HttpParser.parse(client);
-                    
-                    ServerAnnotationHandler.handleTest(request, client);
+                    System.out.println(client.getInetAddress().getHostAddress() + "/HTTP/" + request.getMethod() + " url: " + request.getHost() + request.getReferrer());
+
+                    ServerAnnotationHandler.handle(request, client);
                 }
             } catch(IOException e) {
                 e.printStackTrace();

@@ -6,15 +6,16 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import server.html.Html;
 import server.response.IHttpResponse;
 
 public class HttpResponse implements IHttpResponse {
     
     @Override
-    public void response(Socket client) {
+    public void response(Socket client, Html html) {
         try {
             PrintWriter out = new PrintWriter(client.getOutputStream());
-            String[] html = new String[] { "<H1> Endy <H1> <hr> So.. simple framework!" };
+            String[] htmls = new String[] { "<H1> Endy <H1> <hr> So.. simple framework!" };
             
             /* Headers */
             out.println("HTTP/1.1 200 OK");
@@ -23,7 +24,7 @@ public class HttpResponse implements IHttpResponse {
             out.println("");
 
             /* Body */
-            for(String element : html) {
+            for(String element : htmls) {
                 out.println(element);
             }
             

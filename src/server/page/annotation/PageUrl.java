@@ -14,5 +14,6 @@ import java.lang.annotation.Target;
 public @interface PageUrl {
     
     String location() default "/";
+    String html();
     
 }
