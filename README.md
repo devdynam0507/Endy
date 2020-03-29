@@ -1,5 +1,5 @@
 # Endy Web Framework
-간단한 서버 프로그래밍을 지원하는 Endy Web Framework 입니다. <
+간단한 서버 프로그래밍을 지원하는 Endy Web Framework 입니다.  
 기본적인 Http 통신 지식만 있으면 누구나 간단하게 서버 프로그래밍을 할 수 있습니다.
 
 # Example JavaCode
