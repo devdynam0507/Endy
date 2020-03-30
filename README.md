@@ -45,3 +45,21 @@ public class Index extends AbstractPage {
 }
 ```
 
+# Model example
+Endy Framework는 간편한 DB 테이블 설계를 지원합니다.
+
+```java
+package framework.example;
+
+import server.model.annotation.Columm;
+import server.model.annotation.Model;
+
+@Model(name = "endy")
+public class ModelExample {
+ 
+    @Columm(name="name") String name;
+    @Columm(name="age") int age;
+    @Columm(name="school") String school;
+    
+}
+```
