@@ -7,7 +7,7 @@ import server.page.annotation.RequestHandler;
 import server.request.HttpRequestPacket;
 import server.response.HttpResponse.ResponseContext;
 
-@PageUrl(location = "/workspace/Endy", html = "index.html")
+@PageUrl(location = "/a", html = "index.html")
 public class Index extends AbstractPage {
     
     /**
@@ -26,7 +26,6 @@ public class Index extends AbstractPage {
     @RequestHandler(protocol = HttpProtocol.GET)
     public void get(HttpRequestPacket packet) {
         System.out.println("Call get method");
-        System.out.println(packet.getParameter("a"));
     }
     
     /**

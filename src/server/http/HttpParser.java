@@ -30,6 +30,7 @@ public class HttpParser {
         switch(packetId) {
             case "Method":
                 builder.setMethod(packetContent.trim());
+                builder.setReferrer(packet[2]);
                 break;
             case "Host":
                 builder.setHost(packetContent);
@@ -83,12 +84,14 @@ public class HttpParser {
     
     private static String[] parse(String line) {
         String[] split = line.split(":");    
+        System.out.println(line);
         
-        if(split.length == 1 && line.contains("GET") || line.contains("POST")) {
+        if(split.length == 1 && line.contains("HTTP/1.1")) {
             String packetId = null;
+            String[] packetSplit = line.split(" ");
             
-            packetId = line.split("/")[0];
-            split = new String[] { "Method", packetId };
+            packetId = packetSplit[0];
+            split = new String[] { "Method", packetId, packetSplit[1] };
         } else if(line.contains("Referer")) {
             split = new String[] { "Referer", line.substring(17, line.length())};
         }
