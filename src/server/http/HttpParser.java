@@ -51,8 +51,14 @@ public class HttpParser {
         
         for(String cookieContent : split) {
             String[] cookieSplit = cookieContent.split("=");
+            String cookieElement = null;
+
+            if(cookieSplit.length > 1) {
+                cookieElement = cookieSplit[1];
+            }
+
+            cookie.setCookie(cookieSplit[0].trim(), cookieElement); //cookieId, cookieContent
             
-            cookie.setCookie(cookieSplit[0].trim(), cookieSplit[1]); //cookieId, cookieContent
         }
         
         return cookie;

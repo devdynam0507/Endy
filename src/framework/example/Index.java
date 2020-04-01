@@ -1,13 +1,19 @@
 package framework.example;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import server.http.HttpProtocol;
+import server.model.ModelLoader;
+import server.model.ModelLoader.ModelInfo;
+import server.mysql.MySql;
 import server.page.AbstractPage;
 import server.page.annotation.PageUrl;
 import server.page.annotation.RequestHandler;
 import server.request.HttpRequestPacket;
 import server.response.HttpResponse.ResponseContext;
 
-@PageUrl(location = "/a", html = "index.html")
+@PageUrl(location = "/index", html = "index.html")
 public class Index extends AbstractPage {
     
     /**
@@ -26,6 +32,19 @@ public class Index extends AbstractPage {
     @RequestHandler(protocol = HttpProtocol.GET)
     public void get(HttpRequestPacket packet) {
         System.out.println("Call get method");
+    
+        ModelInfo info = ModelLoader.getModelInfo(ModelExample.class);
+        ResultSet rs = MySql.select(info, "SELECT * FROM {table}");
+        
+        try{ 
+            while(rs.next()) {
+                System.out.println("name: " + rs.getString("name"));
+                System.out.println("age: " + rs.getInt("age"));
+                System.out.println("school: " + rs.getString("school"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     /**

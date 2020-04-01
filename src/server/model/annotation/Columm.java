@@ -7,10 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import server.model.type.ModelDataType;
+
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 public @interface Columm {
     String name();
+    ModelDataType type();
+    int length() default 0;
 }

@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
 public @interface Model {
-    String name() default "model";
+    String db_name() default "mysql";
+    String table_name() default "model";
 }
