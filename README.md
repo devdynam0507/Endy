@@ -3,6 +3,7 @@
 기본적인 Http 통신 지식만 있으면 누구나 간단하게 서버 프로그래밍을 할 수 있습니다.
 
 # Example JavaCode
+Endy Framework의 서버 처리는 어노테이션 기반 사용자 지정 메소드로 처리합니다.
 ```java
 package framework.example;
 
@@ -45,3 +46,21 @@ public class Index extends AbstractPage {
 }
 ```
 
+# Model example
+Endy Framework는 간편한 DB 테이블 설계를 지원합니다.
+
+```java
+package framework.example;
+
+import server.model.annotation.Columm;
+import server.model.annotation.Model;
+
+@Model(name = "endy")
+public class ModelExample {
+ 
+    @Columm(name="name") String name;
+    @Columm(name="age") int age;
+    @Columm(name="school") String school;
+    
+}
+```
