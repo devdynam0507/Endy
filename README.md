@@ -55,12 +55,54 @@ package framework.example;
 import server.model.annotation.Columm;
 import server.model.annotation.Model;
 
-@Model(name = "endy")
+@Model(db_name = "dev", table_name = "test")
 public class ModelExample {
  
-    @Columm(name="name") String name;
-    @Columm(name="age") int age;
-    @Columm(name="school") String school;
+    @Columm(name = "name", type = ModelDataType.VARCHAR, length = 100) 
+    public String name;
     
+    @Columm(name = "age", type = ModelDataType.INTEGER, length = 0) 
+    public int age;
+    
+    @Columm(name = "school", type = ModelDataType.VARCHAR, length = 100) 
+    public String school;
+    
+}
+```
+
+## Handle model example
+
+```java
+/**
+    Select query example
+*/
+@RequestHandler(protocol = HttpProtocol.GET)
+public void get(HttpRequestPacket packet) {    
+    ModelInfo info = ModelLoader.getModelInfo(ModelExample.class);
+    ResultSet rs = MySql.select(info, "SELECT * FROM {table}");
+
+    try{ 
+        while(rs.next()) {
+            System.out.println("name: " + rs.getString("name"));
+            System.out.println("age: " + rs.getInt("age"));
+            System.out.println("school: " + rs.getString("school"));
+        }
+    } catch(SQLException e) {
+        e.printStackTrace();
+    }
+}
+```
+```java
+/**
+    Insert query example
+*/
+@RequestHandler(protocol = HttpProtocol.GET)
+public void get(HttpRequestPacket packet) {    
+    ModelExample ex = new ModelExample();
+    ex.age = 21;
+    ex.name = "남대영";
+    ex.school = "None";
+
+    MySql.insert(ex.getModelInfo(ModelExample.class), ex);
 }
 ```
