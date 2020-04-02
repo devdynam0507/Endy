@@ -10,11 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import server.html.Html;
+import framework.project.AbstractProjectFileManager;
 
 public class HtmlLoader {
     
-    private static final String HTML_PARENT_PATH = System.getProperty("user.dir") + "/resource/";
+    private static final String HTML_PARENT_PATH = AbstractProjectFileManager.getRootFolder() + "/resource/";
     
     public static Html parse(String fileName) {
         File file = getHtmlFile(fileName);

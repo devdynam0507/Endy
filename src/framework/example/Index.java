@@ -30,21 +30,8 @@ public class Index extends AbstractPage {
         Get request example
     */
     @RequestHandler(protocol = HttpProtocol.GET)
-    public void get(HttpRequestPacket packet) {
-        System.out.println("Call get method");
-    
-        ModelInfo info = ModelLoader.getModelInfo(ModelExample.class);
-        ResultSet rs = MySql.select(info, "SELECT * FROM {table}");
-        
-        try{ 
-            while(rs.next()) {
-                System.out.println("name: " + rs.getString("name"));
-                System.out.println("age: " + rs.getInt("age"));
-                System.out.println("school: " + rs.getString("school"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+    public void get(HttpRequestPacket packet) {    
+
     }
     
     /**

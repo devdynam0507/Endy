@@ -17,6 +17,10 @@ import server.model.annotation.Model;
 
 public class MySql {
     
+    /*
+        리팩토링 필요
+    */
+    
     private static final String URL_FORMAT = "jdbc:mysql://%host%:%port%/%db_name%";
     
     public static boolean load(String database, String id, String passwd) {
