@@ -132,7 +132,7 @@ HTML에 서버 ResponseContext로 넘겨준 값을 inject template로 치환하�
     <div> 
         <li>
         { for:array }
-            { var:array-context-name }
+            { var:array.context-name }
         { endif: }
         </li>
     </div>
