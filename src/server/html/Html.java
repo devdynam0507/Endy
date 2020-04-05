@@ -10,7 +10,7 @@ import server.html.template.HtmlInjectTemplate;
 public class Html {
     
     private List<String> html;
-    private Map<Integer, String[]> templateLines; //Inject template이 사용된 html 라인 번호
+    private Map<Integer, String[]> templateLines; //Inject template cache
     
     public Html(List<String> html) {
         this.html = html;

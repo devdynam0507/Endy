@@ -5,37 +5,9 @@ import server.response.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HtmlInjectTemplate implements IHtmlInjectTemplate {
+public abstract class HtmlInjectTemplate implements IHtmlInjectTemplate {
     
-    /*
-        :: Non-finish lang ::
-        var: { var:context_name }
-        
-        :: finishable lang ::
-        if: { if:context_name?condition } { else: } { endif: }
-        foreach: { for-each:array } { endfor: }
-        
-        :: example ::
-        <h1> { var:title } </h1>
-        
-        <nav>
-            { if:is_authenticated }
-                <p>로그아웃</p> 
-            { else: }
-                <p>로그인</p> <p>회원가입</p>
-            { endif: }
-        </nav>
-        
-        <div> 
-            <li>
-            { for:array }
-                { var:array-context-name }
-            { endif: }
-            </li>
-        </div>
-    */
-    
-    public static final Pattern pattern = Pattern.compile("[\\{]([^}]*)[\\}]");
+    public static final Pattern pattern = Pattern.compile("[\\{]([^}]*)[\\}]"); //태그 정규식
     
     private Html html;
     
@@ -43,26 +15,20 @@ public class HtmlInjectTemplate implements IHtmlInjectTemplate {
         this.html = html;
     }
     
-    @Override
-    public String compile(HttpResponse.ResponseContext context) {
-        return null;
-    }
-    
-    private static String removeTemplateTag(String line) {
-        return line.replaceAll("[\\{|\\}]", "");
-    }
+    private static String removeTemplateTag(String line) { return line.replaceAll("[\\{|\\}]", ""); }
     
     /**
         @param line Line must be a template tag.
     
         @return Tag Type[0] and Tag Element[1]
     */
-    public static String[] parseTemplateTag(String line) {
-        return removeTemplateTag(line).split(":");
-    }
+    public static String[] parseTemplateTag(String line) { return removeTemplateTag(line).split(":"); }
     
-    public static boolean isVariable(String[] splitedTag) {        
-        return splitedTag[0].equalsIgnoreCase("var");
-    }
+    public static boolean isVariable(String type) { return type.equalsIgnoreCase("var"); }
+    public static boolean isCondition(String type) { return type.equalsIgnoreCase("if"); }
+    public static boolean isLoop(String type) { return type.equalsIgnoreCase("for"); }
+    public static boolean isEndCondition(String type) { return type.equalsIgnoreCase("endif"); }
+    public static boolean isEndLoop(String type) { return type.equalsIgnoreCase("endfor:"); }
+    public static boolean isConditionElse(String type) { return type.equalsIgnoreCase("else"); }
     
 }
