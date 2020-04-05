@@ -70,7 +70,7 @@ public class ModelExample {
 }
 ```
 
-## Handle model example
+# Handle model example
 
 ```java
 /**
@@ -105,4 +105,35 @@ public void get(HttpRequestPacket packet) {
 
     MySql.insert(ex.getModelInfo(ModelExample.class), ex);
 }
+```
+# HTML Inject template  
+HTML에 서버 ResponseContext로 넘겨준 값을 inject template로 치환하여 사용할 수 있습니다.  
+또한 if와 for문을 지원하여 짧은 HTML 코드로 원하는 결과값을 출력할 수 있습니다.  
+
+```html
+    :: Non-finish lang ::
+    var: { var:context_name }
+
+    :: finishable lang ::
+    if: { if:context_name?condition } { else: } { endif: }
+    foreach: { for-each:array } { endfor: }
+
+    :: example ::
+    <h1> { var:title } </h1>
+
+    <nav>
+        { if:is_authenticated }
+            <p>로그아웃</p> 
+        { else: }
+            <p>로그인</p> <p>회원가입</p>
+        { endif: }
+    </nav>
+
+    <div> 
+        <li>
+        { for:array }
+            { var:array.context-name }
+        { endif: }
+        </li>
+    </div>
 ```
