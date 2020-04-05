@@ -21,8 +21,21 @@
         </ol>
     </nav>
     <article>
-        <h2>Web Application Server</h2>
-        An application server is a software framework that provides both facilities to create web applications and a server environment to run them.
+        <h2> { var:name } </h2>
+        
+        { if:is_auth }
+        <p>
+            로그아웃
+        </p>
+        { else: }
+        <p>
+            로그인, 회원가입
+        </p>
+        { endif: }
+        
+        { for:array }
+            <a> { index:name } </a>
+        { endfor: }
     </article>
 </body>
 </html>
