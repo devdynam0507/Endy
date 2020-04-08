@@ -9,12 +9,6 @@ public abstract class HtmlInjectTemplate implements IHtmlInjectTemplate {
     
     public static final Pattern pattern = Pattern.compile("[\\{]([^}]*)[\\}]"); //태그 정규식
     
-    private Html html;
-    
-    public HtmlInjectTemplate(Html html) {
-        this.html = html;
-    }
-    
     private static String removeTemplateTag(String line) { return line.replaceAll("[\\{|\\}]", ""); }
     
     /**

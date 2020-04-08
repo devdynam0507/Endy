@@ -29,15 +29,13 @@ public class Html {
             while(m.find()) {
                 line = m.group().trim();
                 templateLines.put(i, HtmlInjectTemplate.parseTemplateTag(line));
-                
-                System.out.println("line: " + i);
-                
-                for(String s : HtmlInjectTemplate.parseTemplateTag(line)) {
-                    System.out.print(s + " ");
-                }
-                System.out.println();
             }
         }
+    }
+    
+    public void replaceTag(int line, String tag, String element) {
+        String htmlLine = html.get(line).replace(tag, element);
+        html.set(line, htmlLine);
     }
     
     public String toHtml() {
