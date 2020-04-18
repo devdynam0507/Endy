@@ -1,4 +1,4 @@
-package server.html;
+package net.endy.server.html;
 
 import java.util.List;
 import java.util.ArrayList;
