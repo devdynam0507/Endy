@@ -1,4 +1,4 @@
-package server.model.data;
+package net.endy.server.model.data;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

@@ -13,7 +13,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtTokenService {
     
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-    
+
     public static synchronized String create(String subject, int expiredMinute) {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("data", subject);
@@ -29,7 +29,7 @@ public class JwtTokenService {
         return token;
     }
     
-    public static synchronized boolean isTokenValid(String token) {        
+    public static boolean isTokenValid(String token) {        
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         System.out.println(claims.get("data", String.class));
         
