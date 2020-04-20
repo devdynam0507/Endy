@@ -16,6 +16,8 @@ import net.endy.server.token.JwtTokenService;
 
 @Model(db_name = "dev", table_name = "auth")
 public class User extends AbstractModel implements JwtTokenMapper {
+    
+    private static final String UPDATE_QUERY = "UPDATE {table} SET ";
 
     public int id;
     public boolean bAccountExists = false;
@@ -96,7 +98,8 @@ public class User extends AbstractModel implements JwtTokenMapper {
             
             if(!JwtTokenService.isTokenValid(user.refreshToken)) {
                 user.refreshToken = JwtTokenService.create(user, 30 * 60 * 60);
-                //update query
+                
+                MySql.query(UPDATE_QUERY + "refresh_token=" + user.refreshToken + " WHERE email=" + user.email);
             }
         }
         

@@ -23,7 +23,7 @@ public abstract class AbstractPage implements IHttpResponse {
             out.println("Content-Type: text/html; charset=utf-8");
             out.println("Server: Endy");
             out.println("");
-            out.println(html.toHtml());
+            out.println(context.getContext("test"));
             
             out.close();            
         } catch(IOException e) {

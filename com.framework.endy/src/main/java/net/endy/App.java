@@ -1,38 +1,37 @@
 package net.endy;
 
+import net.endy.register.PageRegister;
 import net.endy.server.EndyHttpServer;
 import net.endy.server.mysql.MySql;
-import net.endy.server.token.JwtTokenService;
 /**
  * Hello world!
  *
  */
 public class App {
     
-    public static void main( String[] args ) throws Exception {
-        MySql.load("dev", "root", "dy050700");
-        //ModelLoader.load(ModelExample.class);
-
-        EndyHttpServer server = new EndyHttpServer((short) 8080);
-        server.start();   
+    public static void main(String[] args) throws Exception {
+        register();
         
-        String token = JwtTokenService.create("dynam0507", 10); //유효시간 10분
-        System.out.println(token);
-        System.out.println(JwtTokenService.isTokenValid(token));
+        handleCommand(args); 
+    }
+    
+    public static void register() {
+        PageRegister.registeredPage.put("/index", IndexTest.class);
     }
     
     public static void handleCommand(String... args) throws Exception {
         if(args != null ) {
-            
-           if(args[0].equalsIgnoreCase("-start")) {
-                MySql.load("dev", "root", "dy050700");
-                //ModelLoader.load(ModelExample.class);
-                
+            switch(args[0]) {
+                case "-start":
+                    MySql.load("dev", "root", "dy050700");
 
-                EndyHttpServer server = new EndyHttpServer((short) 8080);
-                server.start();     
-              
+                    EndyHttpServer server = new EndyHttpServer((short) 8080);
+                    server.start();
+                    break;
+                case "-makeproject":
+                    AbstractProjectFileManager.makeSourceDirectories();
             }
+            
         }
     }
 }

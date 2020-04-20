@@ -14,10 +14,9 @@ public class JwtTokenService {
     
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    public static synchronized String create(String subject, int expiredMinute) {
-        Map<String, Object> payloads = new HashMap<>();
-        payloads.put("data", subject);
-        payloads.put("exp", getExpiredTime((long) (1000 * (expiredMinute * 60))));
+    public static synchronized String create(JwtTokenMapper mapper, int expiredMinute) {
+        Map<String, Object> payloads = mapper.makeClaims();
+        payloads.put("exp", (long) (1000 * (expiredMinute * 60)));
                         
         String token = Jwts.builder()
             .setHeaderParam("typ", "JWT")

@@ -1,4 +1,4 @@
-package framework.project;
+package net.endy;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,11 +8,25 @@ import java.io.IOException;
 
 public abstract class AbstractProjectFileManager {
     
-    private static final String PROJECT_ROOT_PATH = System.getProperty("user.dir");
+    private static String PROJECT_ROOT_PATH;
+    
+    static {
+        try {
+            PROJECT_ROOT_PATH = new File(App.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
+            String[] split = PROJECT_ROOT_PATH.split("/");
+            
+            PROJECT_ROOT_PATH = split[0] + split[1];
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     public static File getRootFolder() { return new File(PROJECT_ROOT_PATH); }
     
     public static void makeSourceDirectories() throws Exception {
+        System.out.println(PROJECT_ROOT_PATH);
+
         File root = getRootFolder();
         
         File htmlDirs = new File(root, "/html");
