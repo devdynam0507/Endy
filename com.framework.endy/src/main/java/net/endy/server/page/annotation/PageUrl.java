@@ -7,6 +7,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import net.endy.server.response.HttpResponse;
+import net.endy.server.response.HttpResponse.Type;
+
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -15,5 +18,6 @@ public @interface PageUrl {
     
     String location() default "/";
     String html();
+    HttpResponse.Type response_type() default HttpResponse.Type.Render;
     
 }

@@ -10,14 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.endy.AbstractProjectFileManager;
+
 public class HtmlLoader {
-    
-    private static final String HTML_PARENT_PATH = "/resource/";
-    
-    public static Html parse(String fileName) {
-        File file = getHtmlFile(fileName);
         
-        return parse(file);
+    public static Html getHtmlResource(String fileName) {
+        //TODO: ADD HTML NOT FOUND EXCEPTION      
+        return HtmlStorage.getHtml(fileName);
     }
     
     public static Html parse(File htmlFile) {
@@ -38,9 +37,7 @@ public class HtmlLoader {
                 }
 
                 reader.close();
-                html = new Html(lines);       
-                 
-                HtmlStorage.htmls.put(htmlName, html);
+                html = new Html(lines);                 
             }
         } catch(IOException e) {
              e.printStackTrace();
@@ -49,9 +46,14 @@ public class HtmlLoader {
          return html;
     }
     
-    public static File getHtmlFile(final String fileName) {
-        return new File(HTML_PARENT_PATH + fileName);
+    public static void load() {
+        File[] htmlFiles = AbstractProjectFileManager.getHtmlDirectory().listFiles((dir, name) -> name.endsWith("html"));
+        
+        for(File htmlFile : htmlFiles) {
+            HtmlStorage.htmls.put(htmlFile.getName(), parse(htmlFile));
+        }
     }
+    
     
     public static class HtmlStorage { 
     

@@ -6,32 +6,14 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+
 import net.endy.server.html.Html;
-import net.endy.server.response.IHttpResponse;
 
-public class HttpResponse implements IHttpResponse {
+public class HttpResponse {
     
-    @Override
-    public void response(Socket client, Html html) {
-        try {
-            PrintWriter out = new PrintWriter(client.getOutputStream());
-            String[] htmls = new String[] { "<H1> Endy <H1> <hr> So.. simple framework!" };
-            
-            /* Headers */
-            out.println("HTTP/1.1 200 OK");
-            out.println("Content-Type: text/html; charset=utf-8");
-            out.println("Server: Endy");
-            out.println("");
-
-            /* Body */
-            for(String element : htmls) {
-                out.println(element);
-            }
-            
-            out.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+    public enum Type {
+        Render, Restful
     }
     
     public static class ResponseContext {
@@ -50,6 +32,16 @@ public class HttpResponse implements IHttpResponse {
         
         public String getContext(String contextName) {
             return context.get(contextName);
+        }
+        
+        public String toJson() {
+            JSONObject object = new JSONObject();
+            
+            for(Map.Entry<String, String> entry : context.entrySet()) {
+                object.put(entry.getKey(), entry.getValue());
+            }
+            
+            return object.toJSONString();
         }
         
     }

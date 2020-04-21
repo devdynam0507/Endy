@@ -6,8 +6,10 @@ import net.endy.server.page.annotation.PageUrl;
 import net.endy.server.page.annotation.RequestHandler;
 import net.endy.server.request.HttpRequestPacket;
 import net.endy.server.response.HttpResponse.ResponseContext;
+import net.endy.server.response.HttpResponse;
+import net.endy.server.response.HttpResponse.Type;
 
-@PageUrl(location = "/index", html = "index.html")
+@PageUrl(location = "/index", html = "index.html", response_type = HttpResponse.Type.Render)
 public class IndexTest extends AbstractPage {
 
     @Override

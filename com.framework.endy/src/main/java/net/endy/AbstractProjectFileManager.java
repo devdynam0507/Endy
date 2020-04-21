@@ -10,34 +10,36 @@ public abstract class AbstractProjectFileManager {
     
     private static String PROJECT_ROOT_PATH;
     
+    private static File htmlDirs, jsDirs, cssDirs, moduleDirs, staticFiles, dynamicFiles;
+    private static File serverPropertiesFile;
+    
     static {
         try {
-            PROJECT_ROOT_PATH = new File(App.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
-            String[] split = PROJECT_ROOT_PATH.split("/");
+            PROJECT_ROOT_PATH = new File(App.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath();
+            File root = getRootFolder();
             
-            PROJECT_ROOT_PATH = split[0] + split[1];
+            htmlDirs = new File(root, "/html");
+            jsDirs = new File(root, "/js");
+            cssDirs = new File(root, "/css");
+            moduleDirs = new File(root, "/modules");
+            staticFiles = new File(root, "staticfiles");
+            dynamicFiles = new File(root, "dynamicfiles");
+
+            serverPropertiesFile = new File(root, "server.properties");
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
     
-    
     public static File getRootFolder() { return new File(PROJECT_ROOT_PATH); }
-    
-    public static void makeSourceDirectories() throws Exception {
-        System.out.println(PROJECT_ROOT_PATH);
-
-        File root = getRootFolder();
-        
-        File htmlDirs = new File(root, "/html");
-        File jsDirs = new File(root, "/js");
-        File cssDirs = new File(root, "/css");
-        File moduleDirs = new File(root, "/modules");
-        File staticFiles = new File(root, "staticfiles");
-        File dynamicFiles = new File(root, "dynamicfiles");
-        
-        File serverPropertiesFile = new File(root, "server.properties");
-        
+    public static File getHtmlDirectory() { return htmlDirs; }
+    public static File getJavascriptDirectory() { return jsDirs; }
+    public static File getCssDirectory() { return cssDirs; }
+    public static File getModuleDirectory() { return moduleDirs; }
+    public static File getStaticFiles() { return staticFiles; }
+    public static File getDynamicFiles() { return dynamicFiles; }
+     
+    public static void makeSourceDirectories() throws Exception {        
         htmlDirs.mkdirs();
         jsDirs.mkdirs();
         cssDirs.mkdirs();
@@ -46,7 +48,7 @@ public abstract class AbstractProjectFileManager {
         moduleDirs.mkdirs();
         serverPropertiesFile.createNewFile();
     }
-    
+        
     private static void copy(File target, File dest) {
         try {
             

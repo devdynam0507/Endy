@@ -11,6 +11,7 @@ import net.endy.server.page.annotation.RequestHandler;
 import net.endy.server.request.HttpRequestPacket;
 import net.endy.server.page.AbstractPage;
 import java.net.Socket;
+import net.endy.server.response.HttpResponse.Type;
 
 public class ServerAnnotationHandler {
     
@@ -23,7 +24,8 @@ public class ServerAnnotationHandler {
             PageUrl url = (PageUrl) clazz.getAnnotation(PageUrl.class);
             AbstractPage obj = (AbstractPage) clazz.newInstance();
             Method[] methods = clazz.getDeclaredMethods();
-            Html html = HtmlLoader.parse(url.html());
+            Html html = HtmlLoader.getHtmlResource(url.html());
+            HttpResponse.Type responseType = url.response_type();
             
             if(url.location().equals(ref)) {
                 for(Method m : methods) {
@@ -36,7 +38,7 @@ public class ServerAnnotationHandler {
                     }
                 }
                 
-                obj.response(client, html);
+                obj.response(client, html, responseType);
             } else {
                 //TODO run index
             }
