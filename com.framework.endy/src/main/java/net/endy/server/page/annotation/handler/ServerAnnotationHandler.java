@@ -11,7 +11,8 @@ import net.endy.server.page.annotation.RequestHandler;
 import net.endy.server.request.HttpRequestPacket;
 import net.endy.server.page.AbstractPage;
 import java.net.Socket;
-import net.endy.server.response.HttpResponse.Type;
+
+import net.endy.server.response.HttpResponse;
 
 public class ServerAnnotationHandler {
     
@@ -39,8 +40,6 @@ public class ServerAnnotationHandler {
                 }
                 
                 obj.response(client, html, responseType);
-            } else {
-                //TODO run index
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -14,13 +14,25 @@ public class HttpParser {
         BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
         HttpRequestPacket.HttpRequestBuilder builder = HttpRequestPacket.HttpRequestBuilder.builder();
         String line = null;
+        StringBuilder body = new StringBuilder();
         
         while((line = reader.readLine()) != null && line.length() != 0) {
             String[] packet = parse(line);
             parse(builder, packet);
         }
         
-        return builder.build();
+        HttpRequestPacket packet = builder.build();
+        
+        while(reader.ready()) {
+            body.append(reader.read());
+        }
+
+        System.out.println(body.toString());
+        
+        
+        reader.close();
+        
+        return packet;
     }
     
     private static void parse(HttpRequestPacket.HttpRequestBuilder builder, String[] packet) {
@@ -90,7 +102,6 @@ public class HttpParser {
     
     private static String[] parse(String line) {
         String[] split = line.split(":");    
-        System.out.println(line);
         
         if(split.length == 1 && line.contains("HTTP/1.1")) {
             String packetId = null;

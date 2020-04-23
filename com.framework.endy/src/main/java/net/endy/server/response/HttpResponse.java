@@ -1,8 +1,6 @@
 package net.endy.server.response;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,28 @@ import net.endy.server.html.Html;
 public class HttpResponse {
     
     public enum Type {
-        Render, Restful
+        
+        Render((out, html, context) -> {
+            out.println("Content-Type: text/html; charset=utf-8");
+            out.println("");
+            out.println(html.toHtml());            
+        }),
+        Restful((out, html, context) -> {
+            out.println("Content-Type: application/json; charset=utf-8");
+            out.println("");
+            out.println(context.toJson());
+        });
+        
+        private HttpResponseCallback callbackObject;
+        
+        Type(HttpResponseCallback callback) {
+            this.callbackObject = callback;
+        }
+        
+        public void callback(PrintWriter out, Html html, ResponseContext context) {
+            callbackObject.callback(out, html, context);
+        }
+        
     }
     
     public static class ResponseContext {

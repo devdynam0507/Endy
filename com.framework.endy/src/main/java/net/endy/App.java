@@ -1,5 +1,7 @@
 package net.endy;
 
+import org.json.simple.JSONObject;
+
 import net.endy.register.PageRegister;
 import net.endy.server.EndyHttpServer;
 import net.endy.server.mysql.MySql;
