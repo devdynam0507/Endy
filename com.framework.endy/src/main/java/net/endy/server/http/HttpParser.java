@@ -14,7 +14,6 @@ public class HttpParser {
         BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
         HttpRequestPacket.HttpRequestBuilder builder = HttpRequestPacket.HttpRequestBuilder.builder();
         String line = null;
-        StringBuilder body = new StringBuilder();
         
         while((line = reader.readLine()) != null && line.length() != 0) {
             String[] packet = parse(line);
@@ -22,15 +21,17 @@ public class HttpParser {
         }
         
         HttpRequestPacket packet = builder.build();
+        String contentLenStr = packet.getEtc("Content-Length");
+        int contentLength = contentLenStr == null ? -1 : Integer.parseInt(contentLenStr.trim());
         
-        while(reader.ready()) {
-            body.append(reader.read());
+        if(contentLength != -1) {
+            StringBuilder body = new StringBuilder();
+              for(int i = 0; i < contentLength; i++) {
+                  body.append((char) reader.read());
+              }
+            
+            System.out.println("body:" + body.toString());
         }
-
-        System.out.println(body.toString());
-        
-        
-        reader.close();
         
         return packet;
     }
@@ -54,6 +55,9 @@ public class HttpParser {
             case "Cookie":
                 builder.setCookie(parseCookie(packetContent));
                 break;
+            default:
+                builder.setEtc(packetId, packetContent);
+                break;
         }
     }
     
@@ -70,7 +74,6 @@ public class HttpParser {
             }
 
             cookie.setCookie(cookieSplit[0].trim(), cookieElement); //cookieId, cookieContent
-            
         }
         
         return cookie;

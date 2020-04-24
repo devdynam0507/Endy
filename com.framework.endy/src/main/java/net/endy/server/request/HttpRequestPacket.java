@@ -12,9 +12,11 @@ public class HttpRequestPacket {
     private String referrer;
     private Cookie cookie;
     private Map<String, String> parameter;
+    private Map<String, String> etc;
     
     private HttpRequestPacket() {
         parameter = new HashMap<>();
+        etc = new HashMap<>();
     }
     
     public String getHost() { return host; }
@@ -23,6 +25,7 @@ public class HttpRequestPacket {
     public Cookie getCookie() { return cookie; }
     
     public String getParameter(String paramName) { return parameter.get(paramName); }
+    public String getEtc(String etcName) { return etc.get(etcName); }
     
     @Override
     public String toString() { return method; }
@@ -65,6 +68,12 @@ public class HttpRequestPacket {
         
         public HttpRequestBuilder setParameter(String paramName, String param) {
             request.parameter.put(paramName, param);
+            
+            return this;
+        }
+        
+        public HttpRequestBuilder setEtc(String etcName, String etcValue) {
+            request.etc.put(etcName, etcValue);
             
             return this;
         }

@@ -24,7 +24,7 @@ public abstract class AbstractPage implements IHttpResponse {
             
             type.callback(out, html, context);
             
-            out.close();            
+            out.close();
         } catch(IOException e) {
             e.printStackTrace();
         }
