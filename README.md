@@ -14,7 +14,7 @@ import server.page.annotation.RequestHandler;
 import server.request.HttpRequestPacket;
 import server.response.HttpResponse.ResponseContext;
 
-@PageUrl(location = "/workspace/Endy", html = "index.html") //페이지 경로, 작성한 html 파일 
+@PageUrl(location = "/workspace/Endy", html = "index.html", response_type = HttpResponse.Type.Render) //페이지 경로, 작성한 html 파일, 응답 타입
 public class Index extends AbstractPage {
     
     /**
@@ -32,7 +32,11 @@ public class Index extends AbstractPage {
     */
     @RequestHandler(protocol = HttpProtocol.GET)
     public void get(HttpRequestPacket packet) {
-        System.out.println("Call get method");
+        System.out.println("Call get");
+        
+        setStatusCode(200);
+        context.setContext("test", "test_data")
+            .setContext("test2", "adwjj");
     }
     
     /**
@@ -40,7 +44,10 @@ public class Index extends AbstractPage {
     */
     @RequestHandler(protocol = HttpProtocol.POST)
     public void post(HttpRequestPacket packet) {
-        System.out.println("Call post method");
+        HttpRequestBody body = packet.getBody();
+
+        System.out.println(body.toJson().toJSONString());
+        System.out.println(body.toMap());
     }
     
 }
