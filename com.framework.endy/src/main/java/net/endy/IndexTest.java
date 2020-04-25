@@ -4,6 +4,7 @@ import net.endy.server.http.HttpProtocol;
 import net.endy.server.page.AbstractPage;
 import net.endy.server.page.annotation.PageUrl;
 import net.endy.server.page.annotation.RequestHandler;
+import net.endy.server.request.HttpRequestBody;
 import net.endy.server.request.HttpRequestPacket;
 import net.endy.server.response.HttpResponse;
 
@@ -28,6 +29,9 @@ public class IndexTest extends AbstractPage {
     */
     @RequestHandler(protocol = HttpProtocol.POST)
     public void post(HttpRequestPacket packet) {
-        System.out.println("Call post method");
+        HttpRequestBody body = packet.getBody();
+
+        System.out.println(body.toJson().toJSONString());
+        System.out.println(body.toMap());
     }
 }

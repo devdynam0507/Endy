@@ -26,16 +26,18 @@ public class HttpParser {
         
         if(contentLength != -1) {
             StringBuilder body = new StringBuilder();
-              for(int i = 0; i < contentLength; i++) {
-                  body.append((char) reader.read());
-              }
             
-            System.out.println("body:" + body.toString());
+            for(int i = 0; i < contentLength; i++) {
+                body.append((char) reader.read());
+            }
+            
+            builder.setBody(body.toString());
+            packet = builder.build();
         }
         
         return packet;
     }
-    
+            
     private static void parse(HttpRequestPacket.HttpRequestBuilder builder, String[] packet) {
         String packetId = packet[0];
         String packetContent = packet[1];
