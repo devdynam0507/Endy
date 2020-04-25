@@ -16,17 +16,7 @@ import server.response.HttpResponse.ResponseContext;
 
 @PageUrl(location = "/workspace/Endy", html = "index.html", response_type = HttpResponse.Type.Render) //페이지 경로, 작성한 html 파일, 응답 타입
 public class Index extends AbstractPage {
-    
-    /**
-        Response example
-    */
-    @Override
-    public ResponseContext response() {
-        context.setContext("db", "3306").setContext("coin", "1000");  
-        
-        return context;
-    }
-    
+   
     /**
         Get request example
     */
