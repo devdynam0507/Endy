@@ -1,7 +1,5 @@
 package net.endy;
 
-import org.json.simple.JSONObject;
-
 import net.endy.register.PageRegister;
 import net.endy.server.EndyHttpServer;
 import net.endy.server.mysql.MySql;
@@ -13,6 +11,7 @@ import net.endy.server.html.HtmlLoader;
 public class App {
     
     public static void main(String[] args) throws Exception {
+        AbstractProjectFileManager.load();
         register();
         HtmlLoader.load();
         
