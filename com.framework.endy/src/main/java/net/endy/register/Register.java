@@ -1,18 +1,21 @@
 package net.endy.register;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Register<T> {
+public abstract class Register<K, V> {
     
-    private Map<T, Object> registeredModuls = new HashMap<>();
+    private Map<K, V> registeredModuls = new HashMap<>();
     
-    public Register<T> register(T data, Object object) {
-        registeredModuls.put(data, object);
+    public Register<K, V> register(K key, V value) {
+        registeredModuls.put(key, value);
         
         return this;
     }
     
-    public <K> Object get(T data) { return (K) registeredModuls.get(data); }
+    public V get(K key) { return (V) registeredModuls.get(key); }
+    
+    protected Collection<V> values() { return registeredModuls.values(); }
     
 }

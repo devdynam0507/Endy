@@ -1,6 +1,6 @@
 package net.endy;
 
-import net.endy.register.PageRegister;
+import net.endy.register.ModuleRegister;
 import net.endy.server.EndyHttpServer;
 import net.endy.server.mysql.MySql;
 import net.endy.server.html.HtmlLoader;
@@ -12,14 +12,12 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         AbstractProjectFileManager.load();
-        register();
+        
+        ModuleRegister.getRegister().load();
+        
         HtmlLoader.load();
         
         handleCommand(args); 
-    }
-    
-    public static void register() {
-        PageRegister.registeredPage.put("/index", IndexTest.class);
     }
     
     public static void handleCommand(String... args) throws Exception {

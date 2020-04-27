@@ -1,14 +1,17 @@
 package net.endy.register;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.endy.server.page.AbstractPage;
 
-public class PageRegister extends Register<AbstractPage> {
+public class PageRegister extends Register<String, Class<? extends AbstractPage>> {
     
-    public static Map<String, Class<? extends AbstractPage>> registeredPage = new HashMap<>();
+    private static PageRegister pageRegister;
     
-    
-    
+    public static synchronized PageRegister getRegister() {
+        if(pageRegister == null) {
+            pageRegister = new PageRegister();
+        }
+        
+        return pageRegister;
+    }
+        
 }
